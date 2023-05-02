@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row py-2">
+    <div class="col-md-4 d-flex align-items-center">
+      <div class="">
+        <div class="brdr w-25 mb-3"></div>
+        <h2>
+          Trending <br />
+          TVs <br />
+          Right now
+        </h2>
+        <p class="text-muted">Most Watched movies by week</p>
+        <div class="brdr w-100 mb-3"></div>
+      </div>
+    </div>
+    <div class="col-md-2 cursor-pointer text-center" *ngFor="let tv of trendTV">
+      <a [routerLink]="['/details', tv.id, tv.media_type]">
+        <div class="my-2 position-relative">
+          <img
+            [src]="'https://image.tmdb.org/t/p/w500' + tv.poster_path"
+            class="w-100"
+          />
+          <h3 class="h5">{{ tv.name }}</h3>
+          <div class="vote position-absolute bg-black top-0 end-0">
+            <i class="fa fa-star text-warning"></i>
+            {{ tv.vote_average.toFixed(1) }}
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>

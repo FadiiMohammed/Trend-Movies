@@ -1,0 +1,130 @@
+<div class="container">
+  <section>
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <img
+          *ngIf="itemDetails.poster_path"
+          [src]="'https://image.tmdb.org/t/p/w500' + itemDetails.poster_path"
+          class="w-100"
+        />
+        <img
+          *ngIf="itemDetails.profile_path"
+          [src]="'https://image.tmdb.org/t/p/w500' + itemDetails.profile_path"
+          class="w-100"
+        />
+      </div>
+      <div class="col-md-8">
+        <h2 class="my-3">{{ itemDetails.title }} {{ itemDetails.name }}</h2>
+        <p class="text-muted">
+          {{ itemDetails.overview }}{{ itemDetails.biography }}
+        </p>
+        <span *ngIf="itemDetails.production_companies" class="mb-3"
+          >Produced By:</span
+        >
+        <div
+          class="prodCompanies bg-secondary bg-opacity-25 d-flex align-items-center my-3"
+          *ngFor="let company of itemDetails.production_companies"
+        >
+          <div class="d-flex justify-content-start align-items-center">
+            <div
+              class="col-md-2 px-2 d-flex bg-info bg-opacity-25 me-2 align-items-center"
+            >
+              <img
+                *ngIf="company.logo_path"
+                [src]="
+                  'https://image.tmdb.org/t/p/original' + company.logo_path
+                "
+                class="w-100 py-2"
+              />
+            </div>
+            <div class="col-md-10 d-flex align-items-center">
+              <p>{{ company.name }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex flex-wrap mb-3">
+          <div *ngIf="itemDetails.vote_average" class="mx-2">
+            <span class="">Vote average: </span>{{ itemDetails.vote_average }}
+            <i class="fa fa-star text-warning"></i>
+          </div>
+
+          <div *ngIf="itemDetails.vote_count" class="mx-2">
+            <span>Vote count: </span>{{ itemDetails.vote_count }}
+          </div>
+          <div *ngIf="itemDetails.popularity" class="mx-2">
+            <span>Popularity: </span>{{ itemDetails.popularity }}
+          </div>
+          <div *ngIf="itemDetails.budget" class="mx-2">
+            <span>Budget: </span>{{ itemDetails.budget }}$
+          </div>
+          <div *ngIf="itemDetails.known_for_department" class="mx-2">
+            <span>Known For: </span>{{ itemDetails.known_for_department }}
+          </div>
+        </div>
+        <a
+          *ngIf="itemDetails.homepage"
+          class="btn btn-success"
+          [href]="itemDetails.homepage"
+          target="_blank"
+          >Watch Now</a
+        >
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 *ngIf="itemDetails.seasons" class="text-center mx-auto">Seasons:</h2>
+    <div class="d-flex flex-wrap">
+      <div *ngFor="let season of itemDetails.seasons" class="col-md-4 p-3">
+        <div class="text-center">
+          <img
+            [src]="'https://image.tmdb.org/t/p/w500' + season.poster_path"
+            class="w-100 mb-3"
+          />
+          <span>{{ season.name }}</span>
+
+          <p *ngIf="season.overview && !season.showMore" class="text-muted">
+            {{ season.overview.slice(0, 90) + "...." }}
+            <span
+              class="d-inline-block cursor-pointer"
+              (click)="season.showMore = !season.showMore"
+              >read more</span
+            >
+          </p>
+          <p *ngIf="season.overview && season.showMore" class="text-muted">
+            {{ season.overview }}
+            <span
+              class="d-inline-block cursor-pointer"
+              (click)="season.showMore = !season.showMore"
+              >show less</span
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 *ngIf="!notExist" class="text-center mx-auto">Similar:</h2>
+
+    <div class="d-flex flex-wrap text-center">
+      <div
+        class="col-md-2 px-3 cursor-pointer"
+        *ngFor="let similar of similarMovies"
+      >
+        <div
+          class="my-2 position-relative"
+          (click)="similarContentDetails(media_type, similar.id)"
+        >
+          <img
+            *ngIf="similar.poster_path"
+            [src]="'https://image.tmdb.org/t/p/w500' + similar.poster_path"
+            class="w-100 mb-3"
+          />
+
+          <h3 class="h5">{{ similar.name }}{{ similar.title }}</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

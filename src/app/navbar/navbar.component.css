@@ -1,0 +1,8 @@
+.activeL {
+  color: aquamarine !important;
+}
+
+.nav-link:hover,
+.nav-item i:hover {
+  color: aquamarine;
+}
